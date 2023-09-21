@@ -24,6 +24,14 @@ HF_MODEL_NAME = "lllyasviel/Annotators"
 DWPOSE_MODEL_NAME = "yzd-v/DWPose"
 RAFT_MODEL_NAME = "hr16/RAFT-v2"
 
+if os.path.exists(config_path):
+    config = yaml.load(open(config_path, "r"), Loader=yaml.FullLoader)
+    if "HF_MODEL_NAME" in config:
+        HF_MODEL_NAME = str(Path(here, config["HF_MODEL_NAME"]))
+    if "DWPOSE_MODEL_NAME" in config:
+        DWPOSE_MODEL_NAME = str(Path(here, config["DWPOSE_MODEL_NAME"]))
+    if "RAFT_MODEL_NAME" in config:
+        RAFT_MODEL_NAME = str(Path(here, config["RAFT_MODEL_NAME"]))
 
 def common_annotator_call(model, tensor_image, input_batch=False, **kwargs):
     if "detect_resolution" in kwargs:
